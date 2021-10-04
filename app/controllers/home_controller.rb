@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  http_basic_authenticate_with :name => "inochi", :password => "secret", :except => [:index]
   def index
     @my_name = "Inochi Ze'evi";
     @my_age = 26;
