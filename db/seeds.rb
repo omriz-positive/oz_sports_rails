@@ -5,6 +5,23 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-Trainer.create(name: 'Zeevi');
-Trainer.create(name: 'Yizhak');
-Trainer.create(name: 'Muhi');
+zeevi = Trainer.create(name: 'Zeevi');
+yizhak =Trainer.create(name: 'Yizhak');
+muhi = Trainer.create(name: 'Muhi');
+
+# For zeevi
+5.times do |i|
+    Trainee.create!(name: "#{zeevi.name}'s' Trainee #{i.to_s}", trainer_id: zeevi.id);
+end
+p "Added Trainees for omri";
+# For yizhak
+5.times do |i|
+    Trainee.create!(name: "#{yizhak.name}'s' Trainee #{i.to_s}", trainer_id: yizhak.id);
+end
+p "Added Trainees for yizhak";
+# For muhi
+5.times do |i|
+    Trainee.create!(name: "#{muhi.name}'s' Trainee #{i.to_s}", trainer_id: muhi.id);
+end
+p "Added Trainees for muhi";
+
