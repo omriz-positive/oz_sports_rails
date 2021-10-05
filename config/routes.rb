@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :trainers
   get 'home/index';
   get 'home/json',  to: "home#json_res";
   get 'HelloWorld', to: "home#hello_world"; # This is case sensitive
