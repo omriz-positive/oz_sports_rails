@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'example/plain_text'
+  get 'example/json_res'
+  get 'example/xml_res'
+  get 'example/view_res'
+  get 'example/all_res'
   resources :trainers
   get 'home/index';
   get 'home/json',  to: "home#json_res";
