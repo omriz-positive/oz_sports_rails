@@ -1,6 +1,5 @@
 class TraineesController < ApplicationController
-  before_action :get_trainer_trainee
-  before_action :set_trainee
+  before_action :get_trainer_trainee, :set_trainee
   skip_before_action :set_trainee, only: [:index, :create]
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
@@ -19,7 +18,7 @@ class TraineesController < ApplicationController
     if @trainee.save
       render json: @trainee, status: :created;
     else
-      format.json { render json: @trainee.errors, status: :unprocessable_entity }
+      render json: @trainee.errors, status: :unprocessable_entity;
     end
   end
 
@@ -27,7 +26,7 @@ class TraineesController < ApplicationController
     if @trainee.update(trainee_params)
       render json: @trainee;
     else
-      format.json { render json: @trainee.errors, status: :unprocessable_entity }
+      render json: @trainee.errors, status: :unprocessable_entity;
     end
   end
 
