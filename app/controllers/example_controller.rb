@@ -23,8 +23,8 @@ class ExampleController < ApplicationController
     @res = {:title => "All typeof response", :desc => "You can receive this in any way to like", :dt => Time.now }
     respond_to do |format|
       format.html # all_res.html.erb
-      format.xml  { render :xml => @res}
-      format.json { render :json => @res}
+      format.xml  { render :xml => @res }
+      format.json { render :json => @res }
     end
   end
 end
