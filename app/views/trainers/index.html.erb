@@ -14,16 +14,14 @@
           <th> Select </th>
         </tr>
       </thead>
-      <tbody>
-      <% @trainers.each do |trainer| %> 
-        <tr class="table-active">
+      <tbody><% @trainers.each do |trainer| %> <tr class="table-active">
           <td><%= trainer.id %> </td>
           <td><%= trainer.name %> </td>
           <td><%= link_to 'Edit', edit_trainer_path(trainer) %> </td>
-          <td> <button class="btn btn-primary"> Select <%= trainer.name %> </button> </td>
-        </tr>
-        <% end %>
-      </tbody>
+          <td>
+            <button v-on:click="selectTrainer(<%= trainer.id %>)" class=" btn btn-primary"> Select <%= trainer.name %> </button>
+          </td>
+        </tr><% end %> </tbody>
     </table>
   </section>
   <br><%= link_to 'New Trainer', new_trainer_path %>
