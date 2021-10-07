@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   resources :trainers do 
     resources :trainees, except: [:edit, :new] do
-      resources :trainee_workouts, controller: 'workout_trainees', except: [:edit, :new]
+      get :workouts
     end
     resources :workouts, except: [:edit, :new] do
-      resources :workout_trainees, controller: 'workout_trainees', except: [:edit, :new]
+      get :trainees
     end
   end
   # The routes below are for my own practice

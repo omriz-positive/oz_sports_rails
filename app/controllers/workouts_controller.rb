@@ -11,6 +11,11 @@ class WorkoutsController < ApplicationController
     render json: @workout
   end
 
+  def trainees
+    @workout_trainees = @workout.trainees.all;
+    render json: @workout_trainees;
+  end
+
   def create
     @workout = Workout.new(workout_params)
     @workout.trainer_id = params[:trainer_id];

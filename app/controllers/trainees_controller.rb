@@ -11,6 +11,10 @@ class TraineesController < ApplicationController
   def show
     render json: @trainee;
   end
+  def workouts
+    @trainee_workouts = @trainee.workouts.all;
+    render json: @trainee_workouts;
+  end
 
   def create
     @trainee = Trainee.new(trainee_params)
