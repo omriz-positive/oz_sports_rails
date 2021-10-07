@@ -1,9 +1,10 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @trainer.name %>
-</p>
-
-<%= link_to 'Edit', edit_trainer_path(@trainer) %> |
-<%= link_to 'Back', trainers_path %>
+<main id="view">
+  <header class="d-block w-100">
+    <h2 class="text-center">Trainer: <%=@trainer.name %> </h2>
+  </header>
+</main>
+<script>
+  const model = "<%=@trainer.to_json %>";
+</script>
+<script src="/comps/trainer.js"></script>
