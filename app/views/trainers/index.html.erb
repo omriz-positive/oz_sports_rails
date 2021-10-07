@@ -1,27 +1,31 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Trainers</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @trainers.each do |trainer| %>
-      <tr>
-        <td><%= trainer.name %></td>
-        <td><%= link_to 'Show', trainer %></td>
-        <td><%= link_to 'Edit', edit_trainer_path(trainer) %></td>
-        <td><%= link_to 'Destroy', trainer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Trainer', new_trainer_path %>
+<!-- What is this ? (Ask Shai) -->
+<p id="notice"><%= notice %> </p>
+<main id="view">
+  <header class="d-block w-100">
+    <h2 class="text-center">Choose a Trainer account</h2>
+  </header>
+  <section>
+    <table class="table">
+      <thead>
+        <tr>
+          <th> Id </th>
+          <th> Name </th>
+          <th> Edit </th>
+          <th> Select </th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @trainers.each do |trainer| %> 
+        <tr class="table-active">
+          <td><%= trainer.id %> </td>
+          <td><%= trainer.name %> </td>
+          <td><%= link_to 'Edit', edit_trainer_path(trainer) %> </td>
+          <td> <button class="btn btn-primary"> Select <%= trainer.name %> </button> </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </section>
+  <br><%= link_to 'New Trainer', new_trainer_path %>
+</main>
+<script src="/comps/trainers_index.js"></script>
