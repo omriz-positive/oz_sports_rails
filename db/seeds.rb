@@ -20,6 +20,16 @@ w2 = Workout.create!(name: "My 2nd training session", trainer_id: zeevi.id, star
 w3 = Workout.create!(name: "My 3rd training session", trainer_id: zeevi.id, start_hour: now.tomorrow.tomorrow, duration: 3);
 p "Added Workout sesssions for Zeevi";
 
-WorkoutTrainee.create!(trainee_id: nathan.id, workout_id: w1.id);
-WorkoutTrainee.create!(trainee_id: yaniv.id, workout_id: w1.id);
+WorkoutTrainee.create!(workout_id: w1.id, trainee_id: nathan.id);
+WorkoutTrainee.create!(workout_id: w1.id, trainee_id: yaniv.id);
+WorkoutTrainee.create!(workout_id: w1.id, trainee_id: hed.id);
 p "Added Trainees for the 1st workout";
+
+WorkoutTrainee.create!(workout_id: w2.id, trainee_id: nathan.id);
+WorkoutTrainee.create!(workout_id: w2.id, trainee_id: yaniv.id);
+p "Added Trainees for the 2nd workout";
+
+WorkoutTrainee.create!(workout_id: w3.id, trainee_id: nathan.id);
+WorkoutTrainee.create!(workout_id: w3.id, trainee_id: yaniv.id);
+WorkoutTrainee.create!(workout_id: w3.id, trainee_id: gilad.id);
+p "Added Trainees for the 3rd workout";

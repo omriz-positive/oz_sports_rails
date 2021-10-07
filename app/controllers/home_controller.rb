@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  http_basic_authenticate_with :name => "inochi", :password => "secret", :except => [:index]
+  http_basic_authenticate_with :name => "inochi", :password => "secret", :except => [:index, :oi_pick_me]
   def index
     @my_name = "Inochi Ze'evi";
     @my_age = 26;
@@ -15,5 +15,8 @@ class HomeController < ApplicationController
     hash[:result] = "hello world";
     hash[:date] = Time.now;
     render json: hash;
+  end
+  def oi_pick_me
+    render plain: "You picked ME FINALLY !!!!";
   end
 end

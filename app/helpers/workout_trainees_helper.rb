@@ -1,0 +1,2 @@
+module WorkoutTraineesHelper
+end
