@@ -3,8 +3,13 @@
   <header class="d-block w-100">
     <h2 class="text-center">Trainer: <%=@trainer.name %> </h2>
   </header>
+  <section>
+  </section>
+  <code hidden="hidden">
+    <%= @trainer.to_json %>
+  </code>
 </main>
-<script>
-  const model = "<%=@trainer.to_json %>";
+<script id="model">
+  const model = "<%= @trainer.to_json %>";
 </script>
 <script src="/comps/trainer.js"></script>
