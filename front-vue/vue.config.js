@@ -5,6 +5,6 @@
  */
  module.exports = {
     // options...
-    "outputDir" : "../public/vue-dist",
-    "publicPath": "/vue-dist",
+    "outputDir" : "../public/vue",
+    "publicPath": "/vue",
   }

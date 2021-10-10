@@ -31,4 +31,4 @@
 /config/master.key
 
 # Ignore the generated files from the Vue Project
-/public/vue-dist 
+/public/vue
