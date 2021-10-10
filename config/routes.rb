@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       get :trainees
     end
   end
+  root "trainers#index"
+  
   # The routes below are for my own practice
   get 'example/plain_text'
   get 'example/json_res'
