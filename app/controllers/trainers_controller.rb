@@ -3,6 +3,10 @@ class TrainersController < ApplicationController
 
   # GET /trainers or /trainers.json
   def index
+    render json: Trainer.all;
+  end
+
+  def main
     render :file => 'public/vue/index.html'
   end
 

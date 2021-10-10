@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :trainers do 
+    get 'main', :on => :collection # Alt inline Version
     resources :trainees, except: [:edit, :new] do
       get :workouts
     end
@@ -7,7 +8,7 @@ Rails.application.routes.draw do
       get :trainees
     end
   end
-  root "trainers#index"
+  root controller: 'trainers', action: 'main'
   
   # The routes below are for my own practice
   get 'example/plain_text'
