@@ -1,5 +1,6 @@
 <template>
   <main class="d-block w-100">
+    <h4 class="text-center m-5"><a @click="goToTrainerPage">Go back to trainer panel</a></h4>
     <h1 class="text-center">Trainees page</h1>
     <section class="w-75 m-auto">
       <table v-if="trainees && trainees.length > 0" class="table table-bordered">
@@ -53,6 +54,9 @@
       }
     },
     methods: { 
+      goToTrainerPage() { 
+        this.$router.push("/Trainer/" + this.trainerId);
+      },
       async loadTrainees() {
         let res = await axios.get("/trainers/" + this.trainerId + "/trainees");
         this.trainees = res.data;
