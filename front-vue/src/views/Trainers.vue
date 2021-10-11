@@ -9,7 +9,6 @@
         <tr>
           <th> Id </th>
           <th> Name </th>
-          <th> Edit </th>
           <th> Select </th>
           <th> delete </th>
         </tr>
@@ -19,7 +18,6 @@
         <tr v-for="t in trainers" :key="t.id">
           <td> {{ t.id }} </td>
           <td> {{ t.name }} </td>
-          <td> <button class="btn btn-info"> Edit "{{ t.name }}" </button> </td>
           <td> <button v-on:click="selectTrainer(t.id)" class="btn btn-primary"> Select "{{ t.name }}" </button> </td>
           <td> <button v-on:click="deleteTrainer(t.id)" class="btn btn-danger"> Remove "{{ t.name }}" </button> </td> 
         </tr>

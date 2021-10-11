@@ -27,14 +27,10 @@ class TrainersController < ApplicationController
 
   # PATCH/PUT /trainers/1 or /trainers/1.json
   def update
-    respond_to do |format|
-      if @trainer.update(trainer_params)
-        format.html { redirect_to @trainer, notice: "Trainer was successfully updated." }
-        format.json { render :show, status: :ok, location: @trainer }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @trainer.errors, status: :unprocessable_entity }
-      end
+    if @trainer.update(trainer_params)
+      render json: @trainer, status: 201;
+    else
+      render json: @trainer.errors, status: 400;
     end
   end
 
