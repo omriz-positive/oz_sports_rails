@@ -18,6 +18,7 @@
             <td> {{ w.name }} </td>
             <td> {{ w.start_hour }} </td>
             <td> {{ w.duration ? (w.duration + " Hour/s ") : "N/A" }} </td>
+            <td> <button class="btn btn-primary"> Select Workout to Edit </button> </td>
         </tr>
       </tbody>
       </table>
