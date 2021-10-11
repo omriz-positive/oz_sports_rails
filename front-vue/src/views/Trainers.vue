@@ -26,14 +26,19 @@
       </tbody>
     </table>
   </section>
+  <TrainerForm />
   <br>
 </main>
-</template>
+</template> 
 <script>
-import axios from 'axios';
-
+  import axios from 'axios';
+  import HelloWorld from '@/components/HelloWorld.vue'
+  import TrainerForm from '@/components/NewTrainerForm.vue'
   export default {
     name: 'Trainers',
+    components: {
+      TrainerForm
+    },
     data: function () {
       return {
         TRAINER_ID_KEY: "trainer_id",
@@ -42,7 +47,7 @@ import axios from 'axios';
     },
     methods: {
       redirectToTrainerPage(trainerId) {
-        console.log("trainerId ::: ", trainerId);
+        this.$router.push('/Trainer/' + trainerId);
       },
       async loadTrainers() {
         let trainersRes = await axios.get("/trainers");
@@ -59,9 +64,9 @@ import axios from 'axios';
         const yes = confirm("Are you sure you want to delete a trainer?");
         if (yes) {
           let res = await axios.delete("/trainers/ " + trainerId + ".json");
-          if(res.status == "200") {
+          if (res.status == "200") {
             await this.loadTrainers();
-            setTimeout(() => { alert("Deleted trainer successfully"); },0) 
+            setTimeout(() => { alert("Deleted trainer successfully"); }, 0)
           } else {
             console.info("Notice Res ::: ", res);
             alert("Could not delete trainer, plz check console");
@@ -69,13 +74,14 @@ import axios from 'axios';
         }
       }
     },
-    async created() { 
+    async created() {
       let trainerId = window.localStorage.getItem(this.TRAINER_ID_KEY);
-      if (trainerId !== null) { // Redirect to Trainer page
+      if (trainerId) { // Redirect to Trainer page
+        console.log("already signin ", trainerId, " ::: Redirect to Trainer page");
         this.redirectToTrainerPage(trainerId)
-      } else {
-        await this.loadTrainers();
-      }
+        return;
+      } 
+      await this.loadTrainers();
     },
   }
 </script>
