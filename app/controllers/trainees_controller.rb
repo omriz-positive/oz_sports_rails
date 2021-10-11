@@ -4,8 +4,14 @@ class TraineesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
-    @trainees = Trainee.where(trainer_id: params[:trainer_id])
-    render json: @trainees;
+    @trainees = Trainee.where(trainer_id: params[:trainer_id]).includes(:workouts);
+    # Couldn't do it with the select option.....
+    trainees = @trainees.to_a.map do |t| 
+      hash = t.as_json;
+      hash["last_workout"] = t.workouts.last;
+      t = hash;
+    end
+    render json: trainees;
   end
   
   def show
@@ -35,6 +41,7 @@ class TraineesController < ApplicationController
   end
 
   def destroy
+    @trainee.workout_trainees.destroy_all if @trainee.workout_trainees.any?
     @trainee.destroy
     trainee = @trainee.clone;
     render json: trainee;
