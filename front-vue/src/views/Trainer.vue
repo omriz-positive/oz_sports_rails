@@ -48,8 +48,14 @@ export default {
       let res = await axios.put(trainerBaseUrl,{ name: newName });
       this.trainer = res.data;
     },
-    goToWorkouts() { alert("go to workouts"); },
-    goToTrainees() { alert("go to trainees"); },
+    goToWorkouts() { 
+      alert("go to workouts");
+      this.$router.push('/Trainer/' + this.trainer.id + "/Workouts");
+    },
+    goToTrainees() { 
+      alert("go to trainees");
+      this.$router.push('/Trainer/' + this.trainer.id + "/Trainees");
+    },
   },
   async created() {
     let id = localStorage.getItem(this.TRAINER_ID_KEY)
