@@ -32,7 +32,6 @@
 </template> 
 <script>
   import axios from 'axios';
-  import HelloWorld from '@/components/HelloWorld.vue'
   import TrainerForm from '@/components/NewTrainerForm.vue'
   export default {
     name: 'Trainers',
