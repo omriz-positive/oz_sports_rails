@@ -22,7 +22,7 @@
             <td> {{ w.duration ? (w.duration + " Hour/s ") : "N/A" }} </td>
             <td>
               <div class="d-flex flex-wrap justify-content-around">
-                <button @click="displayDetails(w.id)" class="btn btn-primary"> Display </button> 
+                <button @click="selectWorkout(w.id)" class="btn btn-primary"> Display </button> 
                 <button @click="editWorkout(w.id)" class="btn btn-secondary"> Select Workout to Edit </button> 
                 <button @click="removeWorkout(w.id)" class="btn btn-danger"> Remove workout </button> 
               </div>
@@ -37,7 +37,12 @@
     </section>
     <hr/>
     <!-- Display Selected Workout's -->
-    <section>
+    <section v-if="workoutSelected" class="w-100 mt-5 mb-5">
+        <div class="d-flex flex-wrap justify-content-around">
+          <div class="w-25">Name : {{ workoutSelected.name }}</div>
+          <div class="w-25">Start Hour : {{ workoutSelected.start_hour }}</div>
+          <div class="w-25">Duration (in hours) : {{ workoutSelected.duration || "N/A" }}</div>
+        </div>
     </section>
   </main>
 </template> 
@@ -50,6 +55,7 @@
         TRAINER_ID_KEY: "trainer_id",
         trainerId: 0,
         workouts: [],
+        workoutSelected: null,
       }
     },
     methods: { 
@@ -59,6 +65,15 @@
       async loadWorkouts() {
         let res = await axios.get("/trainers/" + this.trainerId + "/workouts");
         this.workouts = res.data;
+      },
+      selectWorkout(id) {
+        this.workoutSelected = this.workouts.find(w => w.id === id);
+      },
+      removeSelectedWorkout() {
+        this.workoutSelected = null;
+      },
+      editWorkout(id) { 
+        alert("Todo :: created component Form to both Edit and post workouts ::: " + id);
       },
       async removeWorkout(id) {
         let sure = confirm("Are you sure?");
@@ -75,4 +90,4 @@
   }
 </script>
 
-<style>h1 {color:red}</style>
+<style></style>
