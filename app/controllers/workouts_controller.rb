@@ -35,6 +35,7 @@ class WorkoutsController < ApplicationController
   end
 
   def destroy
+    @workout.workout_trainees.destroy_all if @workout.workout_trainees.any?
     @workout.destroy
     workout = @workout.clone;
     render json: workout;
