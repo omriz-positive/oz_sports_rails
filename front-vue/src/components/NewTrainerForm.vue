@@ -27,7 +27,6 @@
         try {
           let res = await axios.post("/trainers",{ name : this.name });
           console.log("response :: ",  res);
-          debugger;
           if(parseInt(res.status / 100) === 2) {
             alert("trainer added successfully, press enter");
             this.$emit('trainerAdded');
