@@ -40,20 +40,16 @@ export default {
       }
     },
     async changeName() {
-      let newName = window.prompt("sometext","");
-      if(!newName) {
-        return;
-      }
+      let newName = window.prompt("Change name to : ",this.trainer.name);
+      if(!newName) return;
       const trainerBaseUrl = "/trainers/" + this.trainer.id;
       let res = await axios.put(trainerBaseUrl,{ name: newName });
       this.trainer = res.data;
     },
     goToWorkouts() { 
-      alert("go to workouts");
       this.$router.push('/Trainer/' + this.trainer.id + "/Workouts");
     },
     goToTrainees() { 
-      alert("go to trainees");
       this.$router.push('/Trainer/' + this.trainer.id + "/Trainees");
     },
   },
