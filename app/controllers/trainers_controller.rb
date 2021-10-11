@@ -12,29 +12,16 @@ class TrainersController < ApplicationController
 
   # GET /trainers/1 or /trainers/1.json
   def show
-  end
-
-  # GET /trainers/new
-  def new
-    @trainer = Trainer.new
-  end
-
-  # GET /trainers/1/edit
-  def edit
+    render json: @trainer;
   end
 
   # POST /trainers or /trainers.json
   def create
     @trainer = Trainer.new(trainer_params)
-
-    respond_to do |format|
-      if @trainer.save
-        format.html { redirect_to @trainer, notice: "Trainer was successfully created." }
-        format.json { render :show, status: :created, location: @trainer }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @trainer.errors, status: :unprocessable_entity }
-      end
+    if @trainer.save
+      render json: @trainer, status: 201;
+    else
+      render json: @trainer.errors, status: 400;
     end
   end
 

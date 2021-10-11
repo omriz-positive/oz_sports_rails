@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :trainers do 
-    get 'main', :on => :collection # Alt inline Version
+  resources :trainers, except: [:edit, :new] do 
+    get 'main', :on => :collection
     resources :trainees, except: [:edit, :new] do
       get :workouts
     end
