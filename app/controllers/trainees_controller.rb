@@ -1,10 +1,10 @@
 class TraineesController < ApplicationController
-  before_action :get_trainer_trainee, :set_trainee
-  skip_before_action :set_trainee, only: [:index, :create]
+  before_action :set_trainee, except: [:index,:create]
+  
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
-    @trainees = @trainer_trainees.all
+    @trainees = Trainee.where(trainer_id: params[:trainer_id])
     render json: @trainees;
   end
   
@@ -41,11 +41,11 @@ class TraineesController < ApplicationController
   end
 
   private
-    def get_trainer_trainee
-      @trainer_trainees = Trainee.where(:trainer_id => params[:trainer_id]);
-    end
+    # def get_trainer_trainee
+    #   # @trainer_trainees = 
+    # end
     def set_trainee
-      @trainee = @trainer_trainees.find(params[:id])
+      @trainee = Trainee.find(params[:id])
       raise ActiveRecord::RecordNotFound if @trainee.nil?
     end
     def trainee_params
