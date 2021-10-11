@@ -26,7 +26,7 @@
       </tbody>
     </table>
   </section>
-  <TrainerForm />
+  <TrainerForm @trainerAdded="loadTrainers"/>
   <br>
 </main>
 </template> 

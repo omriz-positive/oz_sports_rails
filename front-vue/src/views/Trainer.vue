@@ -8,10 +8,10 @@
 export default {
   name: 'Trainer',
   data: function () {
-      return {
-        TRAINER_ID_KEY: "trainer_id",
-      }
-    },
+    return {
+      TRAINER_ID_KEY: "trainer_id",
+    }
+  },
   props: {
     msg : String 
   },
