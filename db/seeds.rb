@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 zeevi = Trainer.create!(name: 'Zeevi');
 p "Added Zeevi";
+shay = Trainer.create!(name: 'Shay');
 
 gilad = Trainee.create!(name: "Gilad", trainer_id: zeevi.id);
 yaniv = Trainee.create!(name: "Yaniv", trainer_id: zeevi.id);
