@@ -14,7 +14,6 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Add Foreach here -->
         <tr v-for="t in trainers" :key="t.id">
           <td> {{ t.id }} </td>
           <td> {{ t.name }} </td>
