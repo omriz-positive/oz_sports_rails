@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   root controller: 'trainers', action: 'main'
   # The routes below are for my own practice
   get 'example/plain_text'
+  post 'example/post_arr'
   get 'example/json_res'
   get 'example/xml_res'
   get 'example/view_res'

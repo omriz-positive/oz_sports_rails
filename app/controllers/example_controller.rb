@@ -1,4 +1,11 @@
 class ExampleController < ApplicationController
+
+  def post_arr
+    params.require(:arr);
+    trainees_arr = params[:arr];
+    render json: { :data_got => trainees_arr, :is_array => trainees_arr.is_a?(Array) };
+  end
+
   def plain_text
     render plain: "This is a plain text and nothing more #{Time.now.to_s}"
   end
