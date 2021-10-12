@@ -1,6 +1,6 @@
 <template>
   <form @submit="submitNewTrainer" class="d-block container">
-    <h3>New Trainer Forms Work</h3>
+    <h3>New Trainer Form</h3>
     <div class="form-group mt-5 mb-4 w-50">
       <label>Name:</label>
       <input v-model="name" type="text" class="form-control">
