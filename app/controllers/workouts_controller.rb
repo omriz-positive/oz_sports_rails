@@ -20,6 +20,7 @@ class WorkoutsController < ApplicationController
     @workout = Workout.new(workout_params)
     @workout.trainer_id = params[:trainer_id];
     if @workout.save
+      add_trainees_to_workout if params.has_key?(:trainee_arr)
       render json: @workout, status: :created;
     else
       render json: @workout.errors, status: :unprocessable_entity;
@@ -28,6 +29,7 @@ class WorkoutsController < ApplicationController
 
   def update
     if @workout.update(workout_params)
+      add_trainees_to_workout if params.has_key?(:trainee_arr)
       render json: @workout;
     else
       render json: @workout.errors, status: :unprocessable_entity;
@@ -52,5 +54,11 @@ class WorkoutsController < ApplicationController
     end
     def workout_params
       params.require(:workout).permit(:name, :start_hour, :duration)
+    end
+    def add_trainees_to_workout
+      arr = params[:trainee_arr];
+      arr.each do |trainee_id| 
+        WorkoutTrainee.create(workout_id: @workout.id, trainee_id: trainee_id);
+      end
     end
 end
