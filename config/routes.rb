@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   resources :trainers, except: [:edit, :new] do 
-    get 'main', :on => :collection
     resources :trainees, except: [:edit, :new] do
       get :workouts
     end
@@ -11,7 +10,6 @@ Rails.application.routes.draw do
     end
   end
   root controller: 'trainers', action: 'main'
-  
   # The routes below are for my own practice
   get 'example/plain_text'
   get 'example/json_res'
