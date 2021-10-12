@@ -56,6 +56,8 @@ class WorkoutsController < ApplicationController
       params.require(:workout).permit(:name, :start_hour, :duration)
     end
     def add_trainees_to_workout
+      @workout.workout_trainees.destroy_all if @workout.workout_trainees.any?
+      @workout.save
       arr = params[:trainee_arr];
       arr.each do |trainee_id| 
         WorkoutTrainee.create(workout_id: @workout.id, trainee_id: trainee_id);

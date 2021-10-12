@@ -13,6 +13,21 @@
       <label>Start Hour:</label>
       <input v-model="workout.start_hour" type="datetime" class="form-control">
     </div>
+    <!-- Add Trainees to workout here -->
+    <section class="d-flex flex-wrap w-50 m-auto">
+        <h4 class="w-100">Trainees</h4>
+        <ul class="list-group w-100">
+            <li v-for="t in trainerTrainees" :key="t.id" class="list-group-item text-center d-flex flex-wrap justify-content-around">
+                <div class="w-25">{{t.name}} </div>
+                <div v-if="isTraineeInserted(t.id)" class="w-25">
+                    <button class="btn btn-danger" type="button" @click="removeTrainee(t.id)">Remove</button>
+                </div>
+                <div v-else class="w-25">
+                    <button class="btn btn-primary" type="button" @click="addTrainee(t.id)">Add</button>
+                </div>
+            </li>
+        </ul>
+    </section>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </template>
@@ -44,6 +59,7 @@
         },
         methods: {
             async submit() {
+                this.workout.trainee_arr = this.workout.trainees.map(t => t.id);
                 if(this.id === -1) {
                     let res = await axios.post(this.apiRoutePrefix + "/workouts", this.workout);
                     this.$emit('workoutAdded',res.data);
@@ -51,7 +67,17 @@
                     let res = await axios.put(this.apiRoutePrefix + "/workouts/" + this.id, this.workout);
                     this.$emit('workoutUpdated',res.data);
                 }
-            }
+            },
+            addTrainee(traineeId) {
+                let trainee = this.trainerTrainees.find(t => t.id === traineeId);
+                this.workout.trainees.push(trainee);
+            },
+            isTraineeInserted(traineeId) {
+                return this.workout.trainees.some(t => t.id === traineeId)
+            },
+            removeTrainee(traineeId) {
+                this.workout.trainees = this.workout.trainees.filter(t => t.id !== traineeId);
+            },
         },
         async created() {
             const apiRoutePrefix = "/trainers/" + this.trainerId;
