@@ -73,7 +73,7 @@
         this.workoutSelected = null;
       },
       editWorkout(id) { 
-        alert("Todo :: created component Form to both Edit and post workouts ::: " + id);
+        this.$router.push("/Trainer/" + this.trainerId + "/Workouts/" + id);
       },
       async removeWorkout(id) {
         let sure = confirm("Are you sure?");

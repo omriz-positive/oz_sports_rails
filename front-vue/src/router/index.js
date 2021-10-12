@@ -3,6 +3,7 @@ import Trainers from '../views/Trainers.vue'
 import Trainer from '../views/Trainer.vue'
 import Trainees from '../views/Trainees.vue'
 import Workouts from '../views/Workouts.vue'
+import Workout from '../views/Workout.vue'
 
 const routes = [
   {
@@ -29,6 +30,11 @@ const routes = [
     path: '/Trainer/:id/Workouts',
     name: 'TrainerWorkouts',
     component: Workouts
+  },
+  {
+    path: '/Trainer/:trainerId/Workouts/:id',
+    name: 'TrainerWorkoutPage',
+    component: Workout
   },
   {
     path: '/about',
