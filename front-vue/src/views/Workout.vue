@@ -2,7 +2,7 @@
   <main>
     <h3 class="text-center"><a @click="goToWorkoutsPage">go back to trainer's workouts page</a></h3>
     <h1 class="text-center">Workout (Edit) Page</h1>
-    <WorkoutForm :trainerId="trainerId" :id="id" />
+    <WorkoutForm @workoutUpdated="goToWorkoutsPage" :trainerId="trainerId" :id="id" />
   </main>
 </template> 
 <script>

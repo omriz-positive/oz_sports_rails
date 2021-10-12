@@ -48,7 +48,8 @@
                     let res = await axios.post(this.apiRoutePrefix + "/workouts", this.workout);
                     this.$emit('workoutAdded',res.data);
                 } else {
-                    alert("todo: PUT action")
+                    let res = await axios.put(this.apiRoutePrefix + "/workouts/" + this.id, this.workout);
+                    this.$emit('workoutUpdated',res.data);
                 }
             }
         },
