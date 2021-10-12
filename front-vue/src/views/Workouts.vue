@@ -37,11 +37,16 @@
     </section>
     <hr/>
     <!-- Display Selected Workout's -->
-    <section v-if="workoutSelected" class="w-100 mt-5 mb-5">
+    <section v-if="selectedWorkout" class="w-100 mt-5 mb-5">
         <div class="d-flex flex-wrap justify-content-around">
-          <div class="w-25">Name : {{ workoutSelected.name }}</div>
-          <div class="w-25">Start Hour : {{ workoutSelected.start_hour }}</div>
-          <div class="w-25">Duration (in hours) : {{ workoutSelected.duration || "N/A" }}</div>
+          <div class="w-25 card"><div class="card-body text-center">Name : {{ selectedWorkout.name }}</div></div>
+          <div class="w-25 card"><div class="card-body text-center">Start Hour : {{ selectedWorkout.start_hour }}</div></div>
+          <div class="w-25 card"><div class="card-body text-center">Duration (in hours) : {{ selectedWorkout.duration || "N/A" }}</div></div>
+          <div class="w-50 d-flex flex-wrap justify-content-around">
+              <ul class="list-group mt-2 mb-5 w-50">
+                <li v-for="t in selectedWorkout.trainees" :key="t.id" class="list-group-item text-center"> {{t.name}} </li>
+              </ul>
+          </div>
         </div>
     </section>
   </main>
@@ -55,7 +60,7 @@
         TRAINER_ID_KEY: "trainer_id",
         trainerId: 0,
         workouts: [],
-        workoutSelected: null,
+        selectedWorkout: null,
       }
     },
     methods: { 
@@ -66,11 +71,13 @@
         let res = await axios.get("/trainers/" + this.trainerId + "/workouts");
         this.workouts = res.data;
       },
-      selectWorkout(id) {
-        this.workoutSelected = this.workouts.find(w => w.id === id);
+      async selectWorkout(id) {
+        this.selectedWorkout = this.workouts.find(w => w.id === id);
+        let res = await axios.get("/trainers/" + this.trainerId + "/workouts/" + id + "/trainees");
+        this.selectedWorkout.trainees = res.data;
       },
       removeSelectedWorkout() {
-        this.workoutSelected = null;
+        this.selectedWorkout = null;
       },
       editWorkout(id) { 
         this.$router.push("/Trainer/" + this.trainerId + "/Workouts/" + id);
