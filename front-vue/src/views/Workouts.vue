@@ -1,6 +1,7 @@
 <template>
   <main class="d-block w-100">
     <h4 class="text-center m-5"><a @click="goToTrainerPage">Go back to trainer panel</a></h4>
+    <h5 class="text-center m-5"><a @click="goToNewWorkoutPage">Wanna add a new workouts?</a></h5>
     <h1 class="text-center">Workouts page</h1>
     <!-- Workout Table -->
     <section class="w-75 m-auto">
@@ -66,6 +67,9 @@
     methods: { 
       goToTrainerPage() { 
         this.$router.push("/Trainer/" + this.trainerId);
+      },
+      goToNewWorkoutPage() { 
+        this.$router.push("/Trainer/" + this.trainerId + "/Workouts/New");
       },
       async loadWorkouts() {
         let res = await axios.get("/trainers/" + this.trainerId + "/workouts");

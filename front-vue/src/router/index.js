@@ -4,6 +4,7 @@ import Trainer from '../views/Trainer.vue'
 import Trainees from '../views/Trainees.vue'
 import Workouts from '../views/Workouts.vue'
 import Workout from '../views/Workout.vue'
+import WorkoutNew from '../views/WorkoutNew.vue'
 
 const routes = [
   {
@@ -35,6 +36,11 @@ const routes = [
     path: '/Trainer/:trainerId/Workouts/:id',
     name: 'TrainerWorkoutPage',
     component: Workout
+  },
+  {
+    path: '/Trainer/:trainerId/Workouts/New',
+    name: 'TrainerWorkoutNew',
+    component: WorkoutNew
   },
   {
     path: '/about',
