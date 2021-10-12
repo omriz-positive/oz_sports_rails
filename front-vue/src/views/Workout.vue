@@ -30,8 +30,6 @@
     async created() {
       this.trainerId = parseInt(this.$route.params["trainerId"]);
       this.id = parseInt(this.$route.params["id"]);
-      console.log("trainerId ::: ",this.trainerId);
-      console.log("WorkoutId ::: ",this.id);
     },
   }
 </script>
