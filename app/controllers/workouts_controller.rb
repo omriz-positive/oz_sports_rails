@@ -44,8 +44,8 @@ class WorkoutsController < ApplicationController
     def get_trainer_workouts
       @trainer_workouts = Workout.where(:trainer_id => params[:trainer_id]);
     end
-    def set_workout
-      @workout = @trainer_workouts.find(params[:id]);
+    def set_workout 
+      @workout = Workout.find(params[:id]);
     end
     def record_not_found
       render plain: "Could not find resource for Trainer's workout", status: 404

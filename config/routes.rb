@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       get :workouts
     end
     resources :workouts, except: [:edit, :new] do
-      get :trainees
+      get :trainees, :on => :member
     end
   end
   root controller: 'trainers', action: 'main'
