@@ -48,7 +48,8 @@
         },
         data: function () {
           return {
-            workout: { name: '', duration: 0, start_hour: new Date() , trainees: [] },
+            workout: { name: '', duration: 0, start_hour: new Date() , workout_trainees_attributes: [] },
+            workoutTrainees: [],
             trainerTrainees: [],
           }
         },
@@ -59,7 +60,8 @@
         },
         methods: {
             async submit() {
-                this.workout.trainee_arr = this.workout.trainees.map(t => t.id);
+                this.workout.workout_trainees_attributes = 
+                    this.workout.workout_trainees_attributes.filter(t => t._destroy || this.workoutTrainees.every(wt => wt.id !== t.trainee_id));
                 if(this.id === -1) {
                     let res = await axios.post(this.apiRoutePrefix + "/workouts", this.workout);
                     this.$emit('workoutAdded',res.data);
@@ -69,27 +71,44 @@
                 }
             },
             addTrainee(traineeId) {
-                let trainee = this.trainerTrainees.find(t => t.id === traineeId);
-                this.workout.trainees.push(trainee);
+                let input = { trainee_id : traineeId };
+                let index = this.workout.workout_trainees_attributes.findIndex(t => t.trainee_id === traineeId);
+                if(index !== -1){
+                    this.workout.workout_trainees_attributes[index] = input;
+                } else {
+                    this.workout.workout_trainees_attributes.push(input);
+                }
             },
             isTraineeInserted(traineeId) {
-                return this.workout.trainees.some(t => t.id === traineeId)
+                return this.workout.workout_trainees_attributes.some(t => t.trainee_id === traineeId && !t._destroy);
             },
             removeTrainee(traineeId) {
-                this.workout.trainees = this.workout.trainees.filter(t => t.id !== traineeId);
+                let input = this.workoutTrainees.find(t => t.id === traineeId);
+                input = input ? { _destroy : 1, id : input.workout_trainee_id, trainee_id : traineeId } : { _destroy : 1, trainee_id : traineeId };
+                let index = this.workout.workout_trainees_attributes.findIndex(t => t.trainee_id === traineeId);
+                if(index !== -1){
+                    this.workout.workout_trainees_attributes[index] = input;
+                } else {
+                    this.workout.workout_trainees_attributes.push(input);
+                }
             },
         },
         async created() {
+            
             const apiRoutePrefix = "/trainers/" + this.trainerId;
+            
             // Load Trainer's Trainees for adding/removing
             let trainerTraineesRes = await axios.get(apiRoutePrefix + "/trainees");
             this.trainerTrainees = trainerTraineesRes.data;
+            
             if(this.id !== -1)  { // Load Relevent 
-                let workoutRes = await axios.get(apiRoutePrefix + "/workouts/" + this.id);
                 let workoutTraineesRes = await axios.get(apiRoutePrefix + "/workouts/" + this.id + "/trainees");
+                this.workoutTrainees = workoutTraineesRes.data;
+
+                let workoutRes = await axios.get(apiRoutePrefix + "/workouts/" + this.id);
+                workoutRes.data.start_hour = new Date(workoutRes.data.start_hour);
+                workoutRes.data.workout_trainees_attributes = this.workoutTrainees.map(t => { return { trainee_id : t.id }; });
                 this.workout = workoutRes.data;
-                this.workout.start_hour = new Date(workoutRes.data.start_hour);
-                this.workout.trainees = workoutTraineesRes.data;
             }
         },
     }
