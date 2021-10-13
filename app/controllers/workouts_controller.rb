@@ -12,8 +12,8 @@ class WorkoutsController < ApplicationController
   end
 
   def trainees
-    @workout_trainees = @workout.trainees.all;
-    render json: @workout_trainees;
+    workout_trainees = @workout.workout_trainees.joins(:trainee).select("trainees.*, workout_trainees.id as workout_trainee_id");
+    render json: workout_trainees.all;
   end
 
   def create
@@ -51,6 +51,7 @@ class WorkoutsController < ApplicationController
       render plain: "Could not find resource for Trainer's workout", status: 404
     end
     def workout_params
-      params.require(:workout).permit(:name, :start_hour, :duration, :workout_trainees_attributes => [:trainee_id]);
+      params.require(:workout).permit(:name, :start_hour, :duration,
+         :workout_trainees_attributes => [:id, :trainee_id, :_destroy]);
     end
 end
