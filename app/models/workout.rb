@@ -5,4 +5,5 @@ class Workout < ApplicationRecord
   validates :name, presence: true
   validates :start_hour, presence: true
   validates :duration, numericality: { greater_than: 0 }, allow_nil: true
+  accepts_nested_attributes_for :workout_trainees
 end
