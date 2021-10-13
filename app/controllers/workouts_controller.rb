@@ -1,7 +1,7 @@
 class WorkoutsController < ApplicationController
   before_action :get_trainer_workouts, :set_workout;
   skip_before_action :set_workout, only: [:index, :create]
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  # rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
     render json: @trainer_workouts.all;
@@ -12,15 +12,14 @@ class WorkoutsController < ApplicationController
   end
 
   def trainees
-    @workout_trainees = @workout.trainees.all;
-    render json: @workout_trainees;
+    workout_trainees = @workout.workout_trainees.joins(:trainee).select("trainees.*, workout_trainees.id as workout_trainee_id");
+    render json: workout_trainees.all;
   end
 
   def create
     @workout = Workout.new(workout_params)
     @workout.trainer_id = params[:trainer_id];
     if @workout.save
-      add_trainees_to_workout if params.has_key?(:trainee_arr)
       render json: @workout, status: :created;
     else
       render json: @workout.errors, status: :unprocessable_entity;
@@ -29,7 +28,6 @@ class WorkoutsController < ApplicationController
 
   def update
     if @workout.update(workout_params)
-      add_trainees_to_workout if params.has_key?(:trainee_arr)
       render json: @workout;
     else
       render json: @workout.errors, status: :unprocessable_entity;
@@ -53,14 +51,7 @@ class WorkoutsController < ApplicationController
       render plain: "Could not find resource for Trainer's workout", status: 404
     end
     def workout_params
-      params.require(:workout).permit(:name, :start_hour, :duration)
-    end
-    def add_trainees_to_workout
-      @workout.workout_trainees.destroy_all if @workout.workout_trainees.any?
-      @workout.save
-      arr = params[:trainee_arr];
-      arr.each do |trainee_id| 
-        WorkoutTrainee.create(workout_id: @workout.id, trainee_id: trainee_id);
-      end
+      params.require(:workout).permit(:name, :start_hour, :duration,
+         :workout_trainees_attributes => [:id, :trainee_id, :_destroy]);
     end
 end
