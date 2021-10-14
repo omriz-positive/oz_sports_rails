@@ -11,7 +11,7 @@
     </div>
     <div class="form-group mt-5 mb-4 w-50">
       <label>Start Hour:</label>
-      <input v-model="workout.start_hour" type="datetime" class="form-control">
+      <Datepicker v-model="workout.start_hour"></Datepicker>
     </div>
     <!-- Add Trainees to workout here -->
     <section class="d-flex flex-wrap w-50 m-auto">
@@ -34,7 +34,10 @@
 
 <script>
     import axios from 'axios';
+    import Datepicker from 'vue3-date-time-picker';
     export default {
+        name: "WorkoutForm",
+        components: { Datepicker },
         props: {
             trainerId: {
                 type: Number,
