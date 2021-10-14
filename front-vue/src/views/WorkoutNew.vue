@@ -6,7 +6,6 @@
   </main>
 </template> 
 <script>
-  // import axios from 'axios';
   import WorkoutForm from '@/components/WorkoutForm.vue'
   export default {
     name: 'WorkoutNew',

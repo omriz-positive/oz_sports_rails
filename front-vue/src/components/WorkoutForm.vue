@@ -11,22 +11,14 @@
     </div>
     <div class="form-group mt-5 mb-4 w-50">
       <label>Start Hour:</label>
-      <input v-model="workout.start_hour" type="datetime" class="form-control">
+      <Datepicker v-model="workout.start_hour"></Datepicker>
     </div>
     <!-- Add Trainees to workout here -->
     <section class="d-flex flex-wrap w-50 m-auto">
         <h4 class="w-100">Trainees</h4>
-        <ul class="list-group w-100">
-            <li v-for="t in trainerTrainees" :key="t.id" class="list-group-item text-center d-flex flex-wrap justify-content-around">
-                <div class="w-25">{{t.name}} </div>
-                <div v-if="isTraineeInserted(t.id)" class="w-25">
-                    <button class="btn btn-danger" type="button" @click="removeTrainee(t.id)">Remove</button>
-                </div>
-                <div v-else class="w-25">
-                    <button class="btn btn-primary" type="button" @click="addTrainee(t.id)">Add</button>
-                </div>
-            </li>
-        </ul>
+        <multiselect v-model="workoutTraineesVModel" :options="trainerTrainees" :multiple="true" 
+            @select="addTrainee" @remove="removeTrainee" :close-on-select="true" 
+            placeholder="Pick some" label="name" track-by="name" />
     </section>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
@@ -34,7 +26,11 @@
 
 <script>
     import axios from 'axios';
+    import Datepicker from 'vue3-date-time-picker';
+    import Multiselect from 'vue-multiselect'
     export default {
+        name: "WorkoutForm",
+        components: { Datepicker, Multiselect },
         props: {
             trainerId: {
                 type: Number,
@@ -50,7 +46,9 @@
           return {
             workout: { name: '', duration: 0, start_hour: new Date() , workout_trainees_attributes: [] },
             workoutTrainees: [],
+            workoutTraineesVModel: [],
             trainerTrainees: [],
+            arr: [],
           }
         },
         computed: {
@@ -70,8 +68,11 @@
                     this.$emit('workoutUpdated',res.data);
                 }
             },
-            addTrainee(traineeId) {
+            addTrainee(trainee) {
+                console.log("What ???");
+                let traineeId = trainee.id;
                 let input = { trainee_id : traineeId };
+                console.log(input);
                 let index = this.workout.workout_trainees_attributes.findIndex(t => t.trainee_id === traineeId);
                 if(index !== -1){
                     this.workout.workout_trainees_attributes[index] = input;
@@ -79,12 +80,12 @@
                     this.workout.workout_trainees_attributes.push(input);
                 }
             },
-            isTraineeInserted(traineeId) {
-                return this.workout.workout_trainees_attributes.some(t => t.trainee_id === traineeId && !t._destroy);
-            },
-            removeTrainee(traineeId) {
+            removeTrainee(trainee) {
+                console.log("The fuck ?!?!? ???");
+                let traineeId = trainee.id;
                 let input = this.workoutTrainees.find(t => t.id === traineeId);
                 input = input ? { _destroy : 1, id : input.workout_trainee_id, trainee_id : traineeId } : { _destroy : 1, trainee_id : traineeId };
+                console.log(input);
                 let index = this.workout.workout_trainees_attributes.findIndex(t => t.trainee_id === traineeId);
                 if(index !== -1){
                     this.workout.workout_trainees_attributes[index] = input;
@@ -104,7 +105,7 @@
             if(this.id !== -1)  { // Load Relevent 
                 let workoutTraineesRes = await axios.get(apiRoutePrefix + "/workouts/" + this.id + "/trainees");
                 this.workoutTrainees = workoutTraineesRes.data;
-
+                this.workoutTraineesVModel = [...workoutTraineesRes.data];
                 let workoutRes = await axios.get(apiRoutePrefix + "/workouts/" + this.id);
                 workoutRes.data.start_hour = new Date(workoutRes.data.start_hour);
                 workoutRes.data.workout_trainees_attributes = this.workoutTrainees.map(t => { return { trainee_id : t.id }; });
