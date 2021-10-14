@@ -3,6 +3,7 @@ class TraineesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
+    # Todo: Use the tool called "Active Model Serializers"
     @trainees = Trainee.where(trainer_id: params[:trainer_id]).includes(:workouts);
     # Couldn't do it with the select option.....
     trainees = @trainees.to_a.map do |t| 
