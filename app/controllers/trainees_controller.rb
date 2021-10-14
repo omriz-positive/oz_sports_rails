@@ -3,7 +3,7 @@ class TraineesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
-    render json: Trainee.all;
+    render json: Trainee.where(:trainer_id => params[:trainer_id]);
   end
   
   def show
@@ -17,7 +17,6 @@ class TraineesController < ApplicationController
 
   def create
     @trainee = Trainee.new(trainee_params)
-    @trainee.trainer_id = params[:trainer_id];
     if @trainee.save
       render json: @trainee, status: :created;
     else
@@ -46,7 +45,7 @@ class TraineesController < ApplicationController
       raise ActiveRecord::RecordNotFound if @trainee.nil?
     end
     def trainee_params
-      params.require(:trainee).permit(:name)
+      params.require(:trainee).permit(:name, :trainer_id)
     end
     def record_not_found
       render plain: "Could not find resource for Trainer's Trainees", status: 404
