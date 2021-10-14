@@ -50,6 +50,6 @@ class TraineesController < ApplicationController
       params.require(:trainee).permit(:name)
     end
     def record_not_found
-      render plain: "Could not find resource for Trainer's Trainees", status: 404
+      render plain: "Could not find resource for Trainer's Trainee/s", status: 404
     end
 end
