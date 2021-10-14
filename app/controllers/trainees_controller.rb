@@ -50,7 +50,6 @@ class TraineesController < ApplicationController
   private
     def set_trainee
       @trainee = Trainee.find(params[:id])
-      raise ActiveRecord::RecordNotFound if @trainee.nil?
     end
     def trainee_params
       params.require(:trainee).permit(:name)
