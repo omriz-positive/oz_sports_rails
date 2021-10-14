@@ -27,6 +27,10 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# To Shay: I added this manually
+# Could not find a way to add via command-line
+gem 'active_model_serializers', '~> 0.10.12'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
