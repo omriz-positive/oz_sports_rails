@@ -36,13 +36,9 @@
           }
         } catch (err) {
           alert("An error occurred, please check console");
-          console.error("submitNewTrainer ::: ", err);
         }
       }
-    },
-    created() {
-      console.log(this.trainerId);
-    }    
+    }  
   }
 </script>
 

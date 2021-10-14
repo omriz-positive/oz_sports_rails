@@ -1,6 +1,5 @@
 class TraineesController < ApplicationController
   before_action :set_trainee, except: [:index,:create]
-  
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
@@ -17,6 +16,7 @@ class TraineesController < ApplicationController
   def show
     render json: @trainee;
   end
+  
   def workouts
     @trainee_workouts = @trainee.workouts.all;
     render json: @trainee_workouts;
@@ -48,9 +48,6 @@ class TraineesController < ApplicationController
   end
 
   private
-    # def get_trainer_trainee
-    #   # @trainer_trainees = 
-    # end
     def set_trainee
       @trainee = Trainee.find(params[:id])
       raise ActiveRecord::RecordNotFound if @trainee.nil?
