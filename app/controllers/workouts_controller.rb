@@ -1,9 +1,10 @@
 class WorkoutsController < ApplicationController
   before_action :get_trainer_workouts, :set_workout;
   skip_before_action :set_workout, only: [:index, :create]
+  skip_before_action :get_trainer_workouts, except: [:index]
   
   def index
-    render json: @trainer_workouts.all;
+    render json: @trainer_workouts.all ,each_serializer: WorkoutsSerializer;
   end
 
   def show
@@ -11,6 +12,7 @@ class WorkoutsController < ApplicationController
   end
 
   def trainees
+    # Remove later..... and use the data brought back in the show method instead.
     workout_trainees = @workout.workout_trainees.joins(:trainee).select("trainees.*, workout_trainees.id as workout_trainee_id");
     render json: workout_trainees.all;
   end
