@@ -1,6 +1,6 @@
 class Workout < ApplicationRecord
   belongs_to :trainer
-  has_many :workout_trainees;
+  has_many :workout_trainees, dependent: :destroy
   has_many :trainees, through: :workout_trainees
   validates :name, presence: true
   validates :start_hour, presence: true
