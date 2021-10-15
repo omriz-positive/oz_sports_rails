@@ -61,6 +61,7 @@
                 this.workout.workout_trainees_attributes = 
                     this.workout.workout_trainees_attributes.filter(t => t._destroy || this.workoutTrainees.every(wt => wt.id !== t.trainee_id));
                 if(this.id === -1) {
+                    this.workout.trainer_id = this.trainerId;
                     let res = await axios.post(this.apiRoutePrefix + "/workouts", this.workout);
                     this.$emit('workoutAdded',res.data);
                 } else {
@@ -96,10 +97,9 @@
             let trainerTraineesRes = await axios.get(apiRoutePrefix + "/trainees");
             this.trainerTrainees = trainerTraineesRes.data;
             if(this.id !== -1)  { 
-                let workoutTraineesRes = await axios.get(apiRoutePrefix + "/workouts/" + this.id + "/trainees");
-                this.workoutTrainees = workoutTraineesRes.data;
-                this.workoutTraineesVModel = [...workoutTraineesRes.data];
                 let workoutRes = await axios.get(apiRoutePrefix + "/workouts/" + this.id);
+                this.workoutTrainees = workoutRes.data.trainees;
+                this.workoutTraineesVModel = [...workoutRes.data.trainees];
                 workoutRes.data.start_hour = new Date(workoutRes.data.start_hour);
                 workoutRes.data.workout_trainees_attributes = this.workoutTrainees.map(t => { return { trainee_id : t.id }; });
                 this.workout = workoutRes.data;
