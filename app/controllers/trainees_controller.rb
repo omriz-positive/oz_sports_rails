@@ -28,7 +28,6 @@ class TraineesController < ApplicationController
   end
 
   def destroy
-    @trainee.workout_trainees.destroy_all if @trainee.workout_trainees.any?
     @trainee.destroy
     trainee = @trainee.clone;
     render json: trainee;
