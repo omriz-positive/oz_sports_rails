@@ -73,7 +73,6 @@
     async created() {
       let trainerId = window.localStorage.getItem(this.TRAINER_ID_KEY);
       if (trainerId) { // Redirect to Trainer page
-        console.log("already signin ", trainerId, " ::: Redirect to Trainer page");
         this.redirectToTrainerPage(trainerId)
         return;
       } 

@@ -1,8 +1,7 @@
 class WorkoutsController < ApplicationController
   before_action :get_trainer_workouts, :set_workout;
   skip_before_action :set_workout, only: [:index, :create]
-  # rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-
+  
   def index
     render json: @trainer_workouts.all;
   end
@@ -46,9 +45,6 @@ class WorkoutsController < ApplicationController
     end
     def set_workout 
       @workout = Workout.find(params[:id]);
-    end
-    def record_not_found
-      render plain: "Could not find resource for Trainer's workout", status: 404
     end
     def workout_params
       params.require(:workout).permit(:name, :start_hour, :duration,

@@ -31,15 +31,9 @@
         this.trainerId = null;
         this.$router.push('/');
       }
-    },
-    created() {
     }
   }
 </script>
 
 <style>
-
-#nav {
-
-}
 </style>

@@ -69,10 +69,8 @@
                 }
             },
             addTrainee(trainee) {
-                console.log("What ???");
                 let traineeId = trainee.id;
                 let input = { trainee_id : traineeId };
-                console.log(input);
                 let index = this.workout.workout_trainees_attributes.findIndex(t => t.trainee_id === traineeId);
                 if(index !== -1){
                     this.workout.workout_trainees_attributes[index] = input;
@@ -81,11 +79,9 @@
                 }
             },
             removeTrainee(trainee) {
-                console.log("The fuck ?!?!? ???");
                 let traineeId = trainee.id;
                 let input = this.workoutTrainees.find(t => t.id === traineeId);
                 input = input ? { _destroy : 1, id : input.workout_trainee_id, trainee_id : traineeId } : { _destroy : 1, trainee_id : traineeId };
-                console.log(input);
                 let index = this.workout.workout_trainees_attributes.findIndex(t => t.trainee_id === traineeId);
                 if(index !== -1){
                     this.workout.workout_trainees_attributes[index] = input;
@@ -95,14 +91,11 @@
             },
         },
         async created() {
-            
             const apiRoutePrefix = "/trainers/" + this.trainerId;
-            
             // Load Trainer's Trainees for adding/removing
             let trainerTraineesRes = await axios.get(apiRoutePrefix + "/trainees");
             this.trainerTrainees = trainerTraineesRes.data;
-            
-            if(this.id !== -1)  { // Load Relevent 
+            if(this.id !== -1)  { 
                 let workoutTraineesRes = await axios.get(apiRoutePrefix + "/workouts/" + this.id + "/trainees");
                 this.workoutTrainees = workoutTraineesRes.data;
                 this.workoutTraineesVModel = [...workoutTraineesRes.data];
