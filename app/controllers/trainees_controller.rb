@@ -9,11 +9,6 @@ class TraineesController < ApplicationController
   def show
     render json: @trainee;
   end
-  
-  def workouts
-    @trainee_workouts = @trainee.workouts.all;
-    render json: @trainee_workouts;
-  end
 
   def create
     @trainee = Trainee.new(trainee_params)
@@ -42,12 +37,11 @@ class TraineesController < ApplicationController
   private
     def set_trainee
       @trainee = Trainee.find(params[:id])
-      raise ActiveRecord::RecordNotFound if @trainee.nil?
     end
     def trainee_params
       params.require(:trainee).permit(:name, :trainer_id)
     end
     def record_not_found
-      render plain: "Could not find resource for Trainer's Trainees", status: 404
+      render plain: "Could not find resource for Trainer's Trainee/s", status: 404
     end
 end

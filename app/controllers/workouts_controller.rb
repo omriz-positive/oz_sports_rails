@@ -1,7 +1,6 @@
 class WorkoutsController < ApplicationController
   before_action :get_trainer_workouts, :set_workout;
   skip_before_action :set_workout, only: [:index, :create]
-  skip_before_action :get_trainer_workouts, except: [:index]
   
   def index
     render json: @trainer_workouts.all ,each_serializer: WorkoutsSerializer;
