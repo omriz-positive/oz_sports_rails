@@ -3,14 +3,7 @@ class TraineesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
-    @trainees = Trainee.where(trainer_id: params[:trainer_id]).includes(:workouts);
-    # Couldn't do it with the select option.....
-    trainees = @trainees.to_a.map do |t| 
-      hash = t.as_json;
-      hash["last_workout"] = t.workouts.last;
-      t = hash;
-    end
-    render json: trainees;
+    render json: Trainee.where(:trainer_id => params[:trainer_id]);
   end
   
   def show
@@ -19,7 +12,6 @@ class TraineesController < ApplicationController
 
   def create
     @trainee = Trainee.new(trainee_params)
-    @trainee.trainer_id = params[:trainer_id];
     if @trainee.save
       render json: @trainee, status: :created;
     else
@@ -36,7 +28,6 @@ class TraineesController < ApplicationController
   end
 
   def destroy
-    @trainee.workout_trainees.destroy_all if @trainee.workout_trainees.any?
     @trainee.destroy
     trainee = @trainee.clone;
     render json: trainee;
@@ -47,7 +38,7 @@ class TraineesController < ApplicationController
       @trainee = Trainee.find(params[:id])
     end
     def trainee_params
-      params.require(:trainee).permit(:name)
+      params.require(:trainee).permit(:name, :trainer_id)
     end
     def record_not_found
       render plain: "Could not find resource for Trainer's Trainee/s", status: 404

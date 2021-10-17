@@ -3,22 +3,15 @@ class WorkoutsController < ApplicationController
   skip_before_action :set_workout, only: [:index, :create]
   
   def index
-    render json: @trainer_workouts.all;
+    render json: @trainer_workouts.all ,each_serializer: WorkoutsSerializer;
   end
 
   def show
     render json: @workout
   end
 
-  def trainees
-    workout_trainees = @workout.workout_trainees.joins(:trainee).select("trainees.*, workout_trainees.id as workout_trainee_id");
-    render json: workout_trainees.all;
-  end
-
   def create
-    @workout = Workout.new(workout_params)
-    @workout.trainer_id = params[:trainer_id];
-    if @workout.save
+    if @workout = Workout.create(workout_params)
       render json: @workout, status: :created;
     else
       render json: @workout.errors, status: :unprocessable_entity;
@@ -26,7 +19,7 @@ class WorkoutsController < ApplicationController
   end
 
   def update
-    if @workout.update(workout_params)
+    if @workout.update!(workout_params)
       render json: @workout;
     else
       render json: @workout.errors, status: :unprocessable_entity;
@@ -34,7 +27,6 @@ class WorkoutsController < ApplicationController
   end
 
   def destroy
-    @workout.workout_trainees.destroy_all if @workout.workout_trainees.any?
     @workout.destroy
     workout = @workout.clone;
     render json: workout;
@@ -47,7 +39,7 @@ class WorkoutsController < ApplicationController
       @workout = Workout.find(params[:id]);
     end
     def workout_params
-      params.require(:workout).permit(:name, :start_hour, :duration,
+      params.require(:workout).permit(:name, :start_hour, :duration, :trainer_id,
          :workout_trainees_attributes => [:id, :trainee_id, :_destroy]);
     end
 end

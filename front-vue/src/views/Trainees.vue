@@ -65,14 +65,14 @@
         let newName = prompt("Change the name of the trainee","");
         if(!newName) return;
         let res = await axios.put("/trainers/" + this.trainerId + "/trainees/" + id,{ name: newName });
-        if (parseInt(res.status / 100) === 2) alert("changed name successfully");
+        alert("changed name successfully");
         this.loadTrainees();
       },
       async removeTrainee(id) { 
         let sure = confirm("Are you sure?");
         if(!sure) return;
         let res = await axios.delete("/trainers/" + this.trainerId + "/trainees/" + id);
-        if (parseInt(res.status / 100) === 2) alert("Deleted successfully");
+        alert("Deleted successfully");
         this.loadTrainees();
       },
     },

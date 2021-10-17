@@ -58,18 +58,17 @@
       },
       async deleteTrainer(trainerId) {
         const yes = confirm("Are you sure you want to delete a trainer?");
-        if (yes) {
-          let res = await axios.delete("/trainers/ " + trainerId + ".json");
-          if (res.status == "200") {
+        if (!yes) return;
+        try {
+            await axios.delete("/trainers/ " + trainerId + ".json");
             await this.loadTrainers();
             setTimeout(() => { alert("Deleted trainer successfully"); }, 0)
-          } else {
-            console.info("Notice Res ::: ", res);
+        } catch (err) {
+            console.info("Notice Res ::: ", err);
             alert("Could not delete trainer, plz check console");
-          }
         }
       }
-    },
+      },
     async created() {
       let trainerId = window.localStorage.getItem(this.TRAINER_ID_KEY);
       if (trainerId) { // Redirect to Trainer page

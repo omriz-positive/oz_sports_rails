@@ -44,7 +44,10 @@
         },
         data: function () {
           return {
-            workout: { name: '', duration: 0, start_hour: new Date() , workout_trainees_attributes: [] },
+            workout: { name: '', duration: 0, start_hour: new Date() ,
+                       workout_trainees_attributes: [] , // For Form to send back
+                       workout_trainees: [] // has the PK of the Join table for M-to-M
+                     },
             workoutTrainees: [],
             workoutTraineesVModel: [],
             trainerTrainees: [],
@@ -61,6 +64,7 @@
                 this.workout.workout_trainees_attributes = 
                     this.workout.workout_trainees_attributes.filter(t => t._destroy || this.workoutTrainees.every(wt => wt.id !== t.trainee_id));
                 if(this.id === -1) {
+                    this.workout.trainer_id = this.trainerId;
                     let res = await axios.post(this.apiRoutePrefix + "/workouts", this.workout);
                     this.$emit('workoutAdded',res.data);
                 } else {
@@ -80,8 +84,10 @@
             },
             removeTrainee(trainee) {
                 let traineeId = trainee.id;
-                let input = this.workoutTrainees.find(t => t.id === traineeId);
-                input = input ? { _destroy : 1, id : input.workout_trainee_id, trainee_id : traineeId } : { _destroy : 1, trainee_id : traineeId };
+                let input = this.workout.workout_trainees.find(t => t.trainee_id === traineeId);
+                input = input ? 
+                    { _destroy : 1, id : input.id, trainee_id : traineeId } : 
+                    { _destroy : 1, trainee_id : traineeId };
                 let index = this.workout.workout_trainees_attributes.findIndex(t => t.trainee_id === traineeId);
                 if(index !== -1){
                     this.workout.workout_trainees_attributes[index] = input;
@@ -96,10 +102,9 @@
             let trainerTraineesRes = await axios.get(apiRoutePrefix + "/trainees");
             this.trainerTrainees = trainerTraineesRes.data;
             if(this.id !== -1)  { 
-                let workoutTraineesRes = await axios.get(apiRoutePrefix + "/workouts/" + this.id + "/trainees");
-                this.workoutTrainees = workoutTraineesRes.data;
-                this.workoutTraineesVModel = [...workoutTraineesRes.data];
                 let workoutRes = await axios.get(apiRoutePrefix + "/workouts/" + this.id);
+                this.workoutTrainees = workoutRes.data.trainees;
+                this.workoutTraineesVModel = [...workoutRes.data.trainees];
                 workoutRes.data.start_hour = new Date(workoutRes.data.start_hour);
                 workoutRes.data.workout_trainees_attributes = this.workoutTrainees.map(t => { return { trainee_id : t.id }; });
                 this.workout = workoutRes.data;

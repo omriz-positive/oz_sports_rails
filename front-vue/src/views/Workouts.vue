@@ -77,8 +77,8 @@
       },
       async selectWorkout(id) {
         this.selectedWorkout = this.workouts.find(w => w.id === id);
-        let res = await axios.get("/trainers/" + this.trainerId + "/workouts/" + id + "/trainees");
-        this.selectedWorkout.trainees = res.data;
+        let res = await axios.get("/trainers/" + this.trainerId + "/workouts/" + id);
+        this.selectedWorkout.trainees = res.data.trainees;
       },
       removeSelectedWorkout() {
         this.selectedWorkout = null;

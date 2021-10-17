@@ -28,13 +28,11 @@
           return;
         }
         try {
-          let res = await axios.post("/trainers/" + this.trainerId + "/trainees", { name : this.name });
-          console.log("response :: ",  res);
-          if(parseInt(res.status / 100) === 2) {
-            alert("trainer added successfully, press enter");
-            this.$emit('traineeAdded');
-          }
+          let res = await axios.post("/trainers/" + this.trainerId + "/trainees", { name : this.name, trainer_id : this.trainerId });
+          alert("trainer added successfully, press enter");
+          this.$emit('traineeAdded');
         } catch (err) {
+          console.error("Axious ::: ", err);
           alert("An error occurred, please check console");
         }
       }
