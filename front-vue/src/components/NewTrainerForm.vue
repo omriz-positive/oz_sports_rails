@@ -26,13 +26,13 @@
         }
         try {
           let res = await axios.post("/trainers",{ name : this.name });
-          if(parseInt(res.status / 100) === 2) {
-            alert("trainer added successfully, press enter");
-            this.$emit('trainerAdded');
-          }
+          console.log("work ?", res);
+          console.log("work ?", res.validateStatus);
+          alert("trainer added successfully, press enter");
+          this.$emit('trainerAdded');
         } catch (err) {
+          console.error("Axious ::: ", err);
           alert("An error occurred, plea check console");
-          console.error("submitNewTrainer ::: ", err);
         }
       },
     }
